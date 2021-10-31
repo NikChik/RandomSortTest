@@ -29,17 +29,17 @@ namespace Sorting.Algorithms
 
         public int[] Sort(int[] data, Counter iterationsCounter)
         {
-            _logger.Log("Sorting started");
-            _logger.Log(data);
+            _logger?.Log("Sorting started");
+            _logger?.Log(data);
 
             while (!CheckIfSorted(data))
             {
                 data = TrySort(data);
                 iterationsCounter.Count();
-                _logger.Log(data);
+                _logger?.Log(data);
             }
 
-            _logger.Log("Sorting ended");
+            _logger?.Log("Sorting ended");
 
             return data;
         }

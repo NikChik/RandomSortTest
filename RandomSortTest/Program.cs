@@ -4,6 +4,7 @@ using Sorting.Helpers;
 using Sorting.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,8 +30,18 @@ namespace RandomSortTest
             Console.WriteLine($"Source array:");
             Console.WriteLine(array.ConvertToString());
 
-            var loggerPath = "log.txt";
-            var logger = new FileLogger(loggerPath);
+            var logFileNameBuilder = new FileNameBuilder("log", ".txt")
+                .AddDate()
+                .AddTime()
+                .AddGuid();
+
+            var logDirectory = "logs";
+
+            if (!Directory.Exists(logDirectory))
+                Directory.CreateDirectory(logDirectory);
+
+            var logPath = Path.Combine(logDirectory, logFileNameBuilder.GetResult());
+            var logger = new AsyncFileLogger(logPath);
             var sortingAlgorithm = new RandomSorttingAlgorithm(logger);
             var sorter = new Sorter<int[]>(sortingAlgorithm);
             var sortingResult = sorter.Sort(array);
